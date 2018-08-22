@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 
 import type {State, Dispatch} from '../../types'
 import type {Robot} from '../../robot'
-import type {Setting, RobotHealth} from '../../http-api-client'
+import type {Setting, FetchHealthCall} from '../../http-api-client'
 import {fetchSettings, setSettings, makeGetRobotSettings, makeGetRobotHealth} from '../../http-api-client'
 import {downloadLogs} from '../../shell'
 
@@ -15,7 +15,7 @@ import {LabeledButton, LabeledToggle} from '../controls'
 type OP = Robot
 
 type SP = {
-  health: ?RobotHealth,
+  health: ?FetchHealthCall,
   settings: Array<Setting>,
 }
 
