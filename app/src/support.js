@@ -34,7 +34,14 @@ export const supportMiddleware: Middleware = (store) => (next) => (action) => {
     const robot = state.robot.connection.connectRequest.name
     const data = {user_id: userId, 'Robot Name': robot}
     log.debug('Updating intercom data', {data})
-    intercom('update', {data})
+    intercom('update', {...data})
+  }
+
+  if (action.type === 'api:PIPETTES_SUCCESS') {
+    const pipettes = action.payload.pipettes
+    const data = {user_id: userId, 'Pipettes': pipettes}
+    log.debug('Updating intercom data', {data})
+    intercom('update', {...data})
   }
 
   return next(action)
