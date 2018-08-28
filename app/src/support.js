@@ -34,14 +34,17 @@ export const supportMiddleware: Middleware = (store) => (next) => (action) => {
     const robot = state.robot.connection.connectRequest.name
     const data = {user_id: userId, 'Robot Name': robot}
     log.debug('Updating intercom data', data)
-    intercom('update', data)
+    // TODO (ka 2018-8-28): intercom handler defaulting to noop
+    window.Intercom('update', data)
   }
 
   if (action.type === 'api:PIPETTES_SUCCESS') {
     const pipettes = action.payload.pipettes
-    const data = {user_id: userId, 'Pipettes': pipettes}
+    const pipettesList = [pipettes.left.model, pipettes.right.model]
+    const data = {user_id: userId, 'Pipettes': pipettesList}
     log.debug('Updating intercom data', data)
-    intercom('update', data)
+    // TODO (ka 2018-8-28): intercom handler defaulting to noop
+    window.Intercom('update', data)
   }
 
   return next(action)
