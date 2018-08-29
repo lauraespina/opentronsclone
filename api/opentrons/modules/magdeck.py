@@ -1,6 +1,8 @@
 from opentrons.drivers.mag_deck import MagDeck as MagDeckDriver
 from opentrons import commands
 
+MAG_ENGAGE_HEIGHT = 18    # mm
+
 
 class MissingDevicePortError(Exception):
     pass
@@ -31,12 +33,12 @@ class MagDeck:
             self._engaged = False
 
     @commands.publish.both(command=commands.magdeck_engage)
-    def engage(self):
+    def engage(self, delta=0):
         '''
-        Move the magnet to plate top - 0.4 mm
+        Move the magnet to pre-determined height +/- delta
         '''
         if self._driver and self._driver.is_connected():
-            self._driver.move(self._driver.plate_height - 0.4)
+            self._driver.move(MAG_ENGAGE_HEIGHT + delta)
             self._engaged = True
 
     @commands.publish.both(command=commands.magdeck_disengage)
